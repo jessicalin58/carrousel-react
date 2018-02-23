@@ -122,24 +122,19 @@ class App extends Component {
   }
 
   sortRandom() {
-    var randomList = this.state.newState;
-    length = randomList.length,
-    j;
+    // var randomList = this.state.newState;
+    // length = randomList.length,
+    // j;
 
-    for (var j = 0; j < Math.floor(Math.random() * 10); j++) {
-      // console.log(randomList[j]);
-    }
+    // for (var j = 0; j < Math.floor(Math.random() * 10); j++) {
+    //   // console.log(randomList[j]);
+    // }
     // var randomTest = this.state.newState[Math.floor(Math.random() * this.state.newState.length)];
     // var newImageTest = this.state.test.concat(randomTest);
     // this.setState({ test: newState }), function () {
     //   // console.log(this.state.test);
     //   // console.log(newImageTest);
     // }
-
-
-    // console.log(randomTest);
-    // console.log(this.state.test);
-    // console.log(this.state.test);
 
   } 
 
