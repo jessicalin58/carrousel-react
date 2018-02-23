@@ -1,0 +1,56 @@
+body {
+    background-color: red;
+    color: #fff;
+}
+
+h1, p {
+    color: white;
+    font-size: 24px;
+    font-family: "Roboto";
+    font-weight: 200;
+    text-align: left;
+}
+
+.card-title {
+    width: 270px;
+}
+
+.img-container {
+    width: 224px;
+    height: 283px;
+    overflow: hidden;
+    -webkit-box-shadow: 10px 10px 56px -12px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 10px 10px 56px -12px rgba(0, 0, 0, 0.75);
+    box-shadow: 10px 10px 56px -12px rgba(0, 0, 0, 0.75);
+}
+
+img {
+    height: 120%;
+}
+
+.card {
+    position: relative;
+}
+.favorite {
+    z-index: 2;
+    position: absolute;
+    float: right;
+}
+
+.favorite:hover {
+    cursor: pointer;
+}
+
+
+.favorite .filled {
+    display: none;
+}
+
+.favorite:hover .filled{
+    display: block;
+}
+
+.favorite:hover .unfilled{
+    display: none;
+}
+
