@@ -13,6 +13,7 @@ h1, p {
 
 .card-title {
     width: 270px;
+    margin-bottom: 2px;
 }
 
 .img-container {
@@ -35,6 +36,8 @@ img {
     z-index: 2;
     position: absolute;
     float: right;
+    left: 193px;
+    top: 5px;
 }
 
 .favorite:hover {
@@ -54,3 +57,27 @@ img {
     display: none;
 }
 
+.card-id {
+    font-size: 18px;
+    margin-top: 2px;
+}
+
+button {
+    color: white !important;
+    padding: 7px !important;
+}
+
+li {
+    font-size: 14px;
+}
+
+.slider-decorator-1 {
+
+    right: 50px !important;
+  
+}
+
+.slider-decorator-2{
+      bottom: 101% !important;
+      transform: translateX(380%) !important;
+}

@@ -3,12 +3,15 @@ import React, { Component } from 'react';
 import ImageCard from "./Components/ImageCard";
 import Wrapper from "./Components/Wrapper";
 import items from "./items.json";
+
 import './App.css';
 // var createReactClass = require('create-react-class');
 
 var Carousel = require('nuka-carousel');
 var shuffle = require('shuffle-array'),
 shuffledImages = items;
+
+
 
 class App extends Component {
   
@@ -25,64 +28,40 @@ class App extends Component {
       sliderOne: [],
       sliderTwo: [],
       sliderThree: [],
-      sliderFour: []
-   
-    
-    }
+      sliderFour: [],
+      restImages: [],
+      id: null,
+      showResults: true,
+      
+      
+    };
+    this.handleClick = this.handleClick.bind(this);
   }
 
-
-  // state = {
-  //   items
-  // };
   componentWillMount(){
 
-    // function getRandom(items) {
-    //   return Math.floor(Math.random() * items.lenght);
-    //   console.log(getRandom(items));
-    // }
-
-    // for (var i = 0; i < 3; i++) {
-    //   // var newItems = this.setState(getRandom(newItems) ,1);
-    //   console.log(items[i])
-    //   this.setState({
-    //     images: items[i]
-    //   });
-    //   // console.log(images);
-    // }
-    this.test();
+    this.randomizeJSON();
     this.randomImage();
-    this.randomImageTwo();
-    this.randomImageThree();
-    this.randomImageFour();
-    this.testImage();
-    this.sortRandom();
+    this.Grab16();
     this.firstLoop();
     this.secondLoop();
     this.thirdLoop();
     this.forthLoop();
-  
-   
+    this.grabRest();
   }
 
-  testImage(){
+  Grab16(){
     var list = shuffledImages, 
       length = list.length,
       i;
     for (i = 0; i < 16; i++) {
-      // console.log(list[i]);
       this.state.newState[i] = list[i];
     }
-    // console.log(this.state.newState);
-    // this.setState(newState);
-    // this.test();
   }
 
   firstLoop(){
     var listTwo = this.state.newState,
-    length = listTwo.length,
     i;
-
     for(i = 0; i < 4; i++){
       this.state.sliderOne[i] = listTwo[i];
     }
@@ -121,22 +100,17 @@ class App extends Component {
 
   }
 
-  sortRandom() {
-    // var randomList = this.state.newState;
-    // length = randomList.length,
-    // j;
+  grabRest(){
+    var restList = shuffledImages,
+      length = restList.length,
+      i;
+    for (i = 17; i < 95; i++) {
+      this.state.restImages[i] = restList[i];
+    }
 
-    // for (var j = 0; j < Math.floor(Math.random() * 10); j++) {
-    //   // console.log(randomList[j]);
-    // }
-    // var randomTest = this.state.newState[Math.floor(Math.random() * this.state.newState.length)];
-    // var newImageTest = this.state.test.concat(randomTest);
-    // this.setState({ test: newState }), function () {
-    //   // console.log(this.state.test);
-    //   // console.log(newImageTest);
-    // }
+    console.log('Images to add',this.state.restImages);
 
-  } 
+  }
 
   randomImage(){
     var random = shuffledImages[Math.floor(Math.random() * shuffledImages.length)];
@@ -144,7 +118,7 @@ class App extends Component {
     var newImage = this.state.images.concat([random]);
     // console.log(newImage)
     this.setState({images: newImage}, function(){
-      console.log(random);
+      // console.log(random);
     });
     // this.setState({
     //   images: random
@@ -153,32 +127,83 @@ class App extends Component {
     // console.log(this.state.images);
   }
 
-  randomImageTwo(){
-    var randomTwo = items[Math.floor(Math.random() * items.length)];
-    var newImageTwo = this.state.imagesTwo.concat([randomTwo]);
-    this.setState({ imagesTwo: newImageTwo }, function () {
-    });
 
-  }
-
-  randomImageThree(){
-    var randomThree = items[Math.floor(Math.random() * items.length)];
-    var newImageThree = this.state.imagesThree.concat([randomThree]);
-    this.setState({ imagesThree: newImageThree }, function () {
-    });
-  }
-
-  randomImageFour() {
-    var randomFour = items[Math.floor(Math.random() * items.length)];
-    var newImageFour = this.state.imagesFour.concat([randomFour]);
-    this.setState({ imagesFour: newImageFour }, function () {
-    });
-  }
-
-  test(){
-
+  randomizeJSON(){
     shuffle(shuffledImages);
   }
+
+  handleClick = (id) => {
+
+    // this.setState({ showResults: false});
+    const imagesMap = this.state.sliderOne.map(testArray=> {
+      const newImageMap = {...testArray};
+      // console.log('id', newImageMap.itemData.id);
+      // imageClicked.rating = 'liked';
+      // console.log('imageClicke', newImageMap.itemData.id);
+    
+      // this.setState({ sliderOneIds: this.newImageMap.itemData.id });
+      // console.log('new id state:',this.state.sliderOneIds);
+      // console.log('test',this.state.sliderOne.slice(imageClicked));
+      if (newImageMap.itemData.id !== id) {
+        // console.log('3');
+      }
+
+      const subtractArray = newImageMap.itemData.id;
+      // console.log('subtracted', subtractArray);
+
+      // const sliceArray = subtractArray.slice(id);
+    })
+    // console.log(this)
+
+    // console.log(this.state.newState.itemData.id );
+    // if( this.state.newState.itemData.id == id ) {
+    //   console.log('same');
+    // }
+
+    // Count to 16
+    var number = 0;
+
+   
+    // Grab the position lopp
+    while (this.state.newState[number].itemData.id !== id) {
+      number++;
+    }
+
+    // if (this.state.newState[number].itemData.id == id) {
+    //   console.log("same!");
+    // }
+
+    //Change like status
+    var arraTest = number;
+    this.state.newState[arraTest].rating = 'like';
+    console.log('changed', this.state.newState);
+
+    // // console.log('changed', this.state.sliderOne.rating[0] );
+    // console.log(this.state.sliderOne[0]);
+    // const a = this.state.sliderOne.filter(word => word.length > 1);
+    // console.log('position', a);
+
+    //Get the clicked position
+    var numberTest = arraTest;
+
+    //Swap the clicked item with a new one 
+    const varTest = this.state.newState.splice(numberTest, 1, this.state.newState[arraTest]);
+    console.log('new state',this.state.newState);
+
+
+    // Delete the card based on postion clicked
+    const removed = this.state.sliderOne.splice(arraTest, 1);
+    this.setState({ sliderOne: this.state.sliderOne});
+    console.log('sliderone', this.state.sliderOne);
+
+    //Add another card 
+    
+
+
+  }
+
+
+  
 
   render() {
    
@@ -212,22 +237,24 @@ class App extends Component {
         <header className="App-header">
           <p className="App-title">Top recommendations for you</p>
         </header>
-        <Carousel>
+
+        <Carousel >
           <h1>      
-           <Wrapper>
-            {this.state.sliderOne.map(sliderOne => (
+            {this.state.showResults ? <Wrapper>
+            {this.state.sliderOne.map(sliderOne => (              
               <ImageCard
                 cover={sliderOne.cover}
                 image={sliderOne.itemData.image}
                 alt={sliderOne.id}
                 key={sliderOne.key}
-                id={sliderOne.id}
+                id={sliderOne.itemData.id}
                 rating={sliderOne.rating}
                 name={sliderOne.name}
-              />
+                handleClick={this.handleClick.bind(this)}
+              />         
             ))}
 
-          </Wrapper></h1>
+            </Wrapper> : null} </h1>
           <h1> <Wrapper>
             {this.state.sliderTwo.map(sliderTwo => (
               <ImageCard
@@ -235,10 +262,11 @@ class App extends Component {
                 image={sliderTwo.itemData.image}
                 alt={sliderTwo.id}
                 key={sliderTwo.key}
-                id={sliderTwo.id}
+                id={sliderTwo.itemData.id}
                 rating={sliderTwo.rating}
                 name={sliderTwo.name}
                 url={sliderTwo.url}
+            
        
               />
             ))}
@@ -250,7 +278,7 @@ class App extends Component {
                 image={sliderThree.itemData.image}
                 alt={sliderThree.id}
                 key={sliderThree.key}
-                id={sliderThree.id}
+                id={sliderThree.itemData.id}
                 rating={sliderThree.rating}
                 name={sliderThree.name}
                 url={sliderThree.url}
@@ -265,7 +293,7 @@ class App extends Component {
                 image={sliderFour.itemData.image}
                 alt={sliderFour.id}
                 key={sliderFour.key}
-                id={sliderFour.id}
+                id={sliderFour.itemData.id}
                 rating={sliderFour.rating}
                 name={sliderFour.name}
                 url={sliderFour.url}
@@ -274,8 +302,6 @@ class App extends Component {
             ))}
           </Wrapper></h1>
         </Carousel>
-  
-
       </div>
     );
   }
