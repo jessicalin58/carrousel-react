@@ -1,0 +1,8 @@
+{
+  "root": "(public_html) public",
+  "clean_urls": false,
+  "error_page": "{",
+  "routes": {
+    "/**": "test.html"
+  }
+}

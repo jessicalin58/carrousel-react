@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
 import ImageCard from "./Components/ImageCard";
 import Wrapper from "./Components/Wrapper";
 import items from "./items.json";
 
 import './App.css';
 // var createReactClass = require('create-react-class');
+// var ReactDOM = require('react-dom');
+// var axios = require('axios');
 
 var Carousel = require('nuka-carousel');
 var shuffle = require('shuffle-array'),
 shuffledImages = items;
 
+//Increase restImage
+var numberRest = 18;
 
 
 class App extends Component {
@@ -31,12 +34,36 @@ class App extends Component {
       sliderFour: [],
       restImages: [],
       id: null,
-      showResults: true,
+
+      pictures: [],
+
+      shuffledImages
       
       
     };
     this.handleClick = this.handleClick.bind(this);
   }
+
+  componentDidMount(){
+
+    fetch('http://randomuser.me/api/?results=500')
+    .then(results =>{
+      return results.json();
+    }).then(data => {
+      let pictures = data.results.map((pic) => {
+        return(
+          <div key={pic.results}>
+          <img src={pic.picture.medium} />
+          </div>
+        )
+      })
+      this.setState({pictures: pictures});
+      console.log('pictures', this.state.pictures);
+
+    })
+   
+  }
+
 
   componentWillMount(){
 
@@ -48,6 +75,7 @@ class App extends Component {
     this.thirdLoop();
     this.forthLoop();
     this.grabRest();
+    console.log('state,huddled',this.state.shuffledImages);
   }
 
   Grab16(){
@@ -65,7 +93,6 @@ class App extends Component {
     for(i = 0; i < 4; i++){
       this.state.sliderOne[i] = listTwo[i];
     }
-  
   }
 
   secondLoop() {
@@ -107,9 +134,7 @@ class App extends Component {
     for (i = 17; i < 95; i++) {
       this.state.restImages[i] = restList[i];
     }
-
     console.log('Images to add',this.state.restImages);
-
   }
 
   randomImage(){
@@ -130,106 +155,67 @@ class App extends Component {
 
   randomizeJSON(){
     shuffle(shuffledImages);
+    this.setState({allshuffled: shuffledImages});
   }
 
   handleClick = (id) => {
 
-    // this.setState({ showResults: false});
-    const imagesMap = this.state.sliderOne.map(testArray=> {
-      const newImageMap = {...testArray};
-      // console.log('id', newImageMap.itemData.id);
-      // imageClicked.rating = 'liked';
-      // console.log('imageClicke', newImageMap.itemData.id);
-    
-      // this.setState({ sliderOneIds: this.newImageMap.itemData.id });
-      // console.log('new id state:',this.state.sliderOneIds);
-      // console.log('test',this.state.sliderOne.slice(imageClicked));
-      if (newImageMap.itemData.id !== id) {
-        // console.log('3');
-      }
-
-      const subtractArray = newImageMap.itemData.id;
-      // console.log('subtracted', subtractArray);
-
-      // const sliceArray = subtractArray.slice(id);
-    })
-    // console.log(this)
-
-    // console.log(this.state.newState.itemData.id );
-    // if( this.state.newState.itemData.id == id ) {
-    //   console.log('same');
-    // }
-
-    // Count to 16
+    // Count to clicked id number
     var number = 0;
-
-   
-    // Grab the position lopp
-    while (this.state.newState[number].itemData.id !== id) {
+    // Find the array position 
+    while (this.state.shuffledImages[number].itemData.id !== id) {
       number++;
     }
 
-    // if (this.state.newState[number].itemData.id == id) {
-    //   console.log("same!");
-    // }
-
     //Change like status
+    this.setState({arrayPosition: number});
     var arraTest = number;
-    this.state.newState[arraTest].rating = 'like';
+    this.state.shuffledImages[arraTest].rating = 'like';
     console.log('changed', this.state.newState);
 
-    // // console.log('changed', this.state.sliderOne.rating[0] );
-    // console.log(this.state.sliderOne[0]);
-    // const a = this.state.sliderOne.filter(word => word.length > 1);
-    // console.log('position', a);
+    // Grab the position lopp
+    if (this.state.restImages[numberRest] === this.state.restImages[17]) {
+    } else {
+      numberRest++;
+    }
 
-    //Get the clicked position
-    var numberTest = arraTest;
-
-    //Swap the clicked item with a new one 
-    const varTest = this.state.newState.splice(numberTest, 1, this.state.newState[arraTest]);
+    console.log('state of clicked', this.state);
+//////////////////////// SLIDE ONE//////////////////////////////////////////////////
+    //Change the image clicked
+    this.state.sliderOne.splice(arraTest, 1, this.state.shuffledImages[numberRest]);
+    this.setState({ sliderOne: this.state.sliderOne });
     console.log('new state',this.state.newState);
+    console.log('arratest', arraTest);
 
+    //Delete if more than 4 inside array
+    if (this.state.sliderOne > this.state.sliderOne[4]){
+      this.state.sliderOne.pop();
+      console.log('result', this.state.sliderOne);
+    } else {
+      console.log('nope');
+    }
 
-    // Delete the card based on postion clicked
-    const removed = this.state.sliderOne.splice(arraTest, 1);
-    this.setState({ sliderOne: this.state.sliderOne});
-    console.log('sliderone', this.state.sliderOne);
-
-    //Add another card 
-    
-
-
+    //Change the positon of new card
+    if( arraTest > 4) {
+      // Count to clicked id number
+      var positionNumber = 0;
+      // Find the array position 
+      while (this.state.sliderOne[positionNumber].itemData.id !== id) {
+        positionNumber++;
+      }
+      this.state.sliderOne.splice(positionNumber, 1, this.state.shuffledImages[numberRest]);
+      this.setState({ sliderOne: this.state.sliderOne });
+    }
   }
 
 
-  
-
   render() {
-   
+    console.log('result', this.state.persons);
     // console.log(shuffledImages);
     console.log("Slider One",this.state.sliderOne);
     console.log("Slider Two", this.state.sliderTwo);
     console.log("Slider Three", this.state.sliderThree);
     console.log("Slider Four", this.state.sliderFour);
-    // console.log(this.state.items.itemData.id[18]);
-    // console.log(this.state.images);
-    // console.log(this.state.items);
-    // console.log(this.state.items.itemData);
-    
-    // var list = items, 
-    //   length = list.length,
-    //   i;
-
-    // for (i = 0; i < 2; i++) {
-    //   console.log(list[i]);
-    // }
-
-    // var newState = {};
-    // for(var i in items ){
-    //   newState[i] = items;
-    // }    
-    // this.setState(newState);
 
     return (
       
@@ -237,10 +223,11 @@ class App extends Component {
         <header className="App-header">
           <p className="App-title">Top recommendations for you</p>
         </header>
-
+        
+  
         <Carousel >
           <h1>      
-            {this.state.showResults ? <Wrapper>
+         <Wrapper>
             {this.state.sliderOne.map(sliderOne => (              
               <ImageCard
                 cover={sliderOne.cover}
@@ -253,8 +240,7 @@ class App extends Component {
                 handleClick={this.handleClick.bind(this)}
               />         
             ))}
-
-            </Wrapper> : null} </h1>
+            </Wrapper> </h1>
           <h1> <Wrapper>
             {this.state.sliderTwo.map(sliderTwo => (
               <ImageCard
@@ -266,8 +252,7 @@ class App extends Component {
                 rating={sliderTwo.rating}
                 name={sliderTwo.name}
                 url={sliderTwo.url}
-            
-       
+                handleClick={this.handleClick.bind(this)}
               />
             ))}
           </Wrapper></h1>
@@ -282,6 +267,7 @@ class App extends Component {
                 rating={sliderThree.rating}
                 name={sliderThree.name}
                 url={sliderThree.url}
+                handleClick={this.handleClick.bind(this)}
 
               />
             ))}
@@ -297,6 +283,7 @@ class App extends Component {
                 rating={sliderFour.rating}
                 name={sliderFour.name}
                 url={sliderFour.url}
+                handleClick={this.handleClick.bind(this)}
 
               />
             ))}
@@ -306,5 +293,6 @@ class App extends Component {
     );
   }
 }
+
 
 export default App;

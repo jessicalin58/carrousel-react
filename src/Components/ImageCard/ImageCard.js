@@ -2,10 +2,9 @@ import React from "react";
 import "./ImageCard.css";
 
 
-
 const ImageCard = props => (
+    
     <div className="card">
-
         <div className="favorite" 
             onClick={() => props.handleClick(props.id)}>
             <svg className="unfilled" fill="#fff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">

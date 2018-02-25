@@ -71,6 +71,10 @@ li {
     font-size: 14px;
 }
 
+.slider-decorator-0{
+    background: url(left.svg) no-repeat;
+}
+
 .slider-decorator-1 {
 
     right: 50px !important;
@@ -81,3 +85,4 @@ li {
       bottom: 101% !important;
       transform: translateX(380%) !important;
 }
+
