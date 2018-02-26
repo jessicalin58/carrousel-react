@@ -46,21 +46,21 @@ class App extends Component {
 
   componentDidMount(){
 
-    fetch('http://randomuser.me/api/?results=500')
-    .then(results =>{
-      return results.json();
-    }).then(data => {
-      let pictures = data.results.map((pic) => {
-        return(
-          <div key={pic.results}>
-          <img src={pic.picture.medium} />
-          </div>
-        )
-      })
-      this.setState({pictures: pictures});
-      console.log('pictures', this.state.pictures);
+    // fetch('http://randomuser.me/api/?results=500')
+    // .then(results =>{
+    //   return results.json();
+    // }).then(data => {
+    //   let pictures = data.results.map((pic) => {
+    //     return(
+    //       <div key={pic.results}>
+    //       <img src={pic.picture.medium} />
+    //       </div>
+    //     )
+    //   })
+    //   this.setState({pictures: pictures});
+      // console.log('pictures', this.state.pictures);
 
-    })
+    // })
    
   }
 
@@ -80,9 +80,9 @@ class App extends Component {
 
   Grab16(){
     var list = shuffledImages, 
-      length = list.length,
       i;
     for (i = 0; i < 16; i++) {
+      
       this.state.newState[i] = list[i];
     }
   }
@@ -97,7 +97,6 @@ class App extends Component {
 
   secondLoop() {
     var listThree = this.state.newState,
-    length = listThree.length,
     j;
 
     for(j = 4; j < 8; j++) {
@@ -107,7 +106,6 @@ class App extends Component {
 
   thirdLoop(){
     var listFour = this.state.newState,
-      length = listFour.length,
       z;
 
     for (z = 8; z < 12; z++) {
@@ -118,7 +116,6 @@ class App extends Component {
 
   forthLoop(){
     var listFive = this.state.newState,
-      length = listFive.length,
       z;
 
     for (z = 12; z < 16; z++) {
@@ -129,7 +126,6 @@ class App extends Component {
 
   grabRest(){
     var restList = shuffledImages,
-      length = restList.length,
       i;
     for (i = 17; i < 95; i++) {
       this.state.restImages[i] = restList[i];
