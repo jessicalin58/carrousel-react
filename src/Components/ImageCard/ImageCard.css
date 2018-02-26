@@ -65,6 +65,7 @@ img {
 button {
     color: white !important;
     padding: 7px !important;
+    /* opacity: 0 !important; */
 }
 
 li {
@@ -72,16 +73,28 @@ li {
 }
 
 .slider-decorator-0{
+    height: 50px;
     background: url(left.svg) no-repeat;
+
+}
+
+.slider-decorator-0 button {
+   opacity: 0 !important;
+}
+
+.slider-decorator-1 button {
+    opacity: 0 !important;
 }
 
 .slider-decorator-1 {
-
+    height: 50px;
     right: 50px !important;
+    background: url(right.svg) no-repeat;
   
 }
 
-.slider-decorator-2{
+.slider-decorator-2 {
+       
       bottom: 101% !important;
       transform: translateX(380%) !important;
 }
