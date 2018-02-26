@@ -41,18 +41,6 @@ class App extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  componentDidMount(){
-
-    //API call with the movie data
-    var th = this;
-    this.serverRequest =
-      axios.get('http://api.randomuser.me/?results=5')
-        .then(function (result) {
-          th.setState({
-            persons: result.data.results
-          });
-        })   
-  }
 
   componentWillMount(){
 
@@ -357,6 +345,22 @@ class App extends Component {
       this.setState({ sliderFour: this.state.sliderFour });
     }
 
+  }
+
+
+  componentDidMount() {
+
+    //API call with the movie data
+    //Currently not being used, but if fetched correctly it would be set to:
+    // this.setState({ allShuffled: result.data.results })
+    var th = this;
+    this.serverRequest =
+      axios.get('http://api.randomuser.me/?results=5')
+        .then(function (result) {
+          th.setState({
+            persons: result.data.results
+          });
+        })
   }
 
 
